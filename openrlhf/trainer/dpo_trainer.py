@@ -296,7 +296,7 @@ class DPOTrainer(ABC):
         loss_masks = attention_mask.clone().bool()
         # mask prompts
         for mask, source_len in zip(loss_masks, prompt_id_lens):
-            mask[:source_len] = False
+            mask[:int(source_len)] = False
         loss_masks = loss_masks[:, 1:]
 
         # dummy token; we'll ignore the losses on these tokens later

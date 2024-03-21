@@ -282,6 +282,9 @@ class DeepspeedStrategy(ABC):
                 vv = v.data.cpu()
                 output_state_dict[k] = vv
 
+            if 'lm_head.weight' in state_dict.keys():
+                output_state_dict['lm_head.weight'] = state_dict['lm_head.weight']
+
             assert len(output_state_dict) == len(
                 state_dict
             ), f"mismatch size output_state_dict({len(output_state_dict)}) and state_dict({len(state_dict)})"
