@@ -173,9 +173,9 @@ class Actor(nn.Module):
     ) -> torch.Tensor:
         """Returns action log probs"""
         # https://github.com/OpenLLMAI/OpenRLHF/issues/217
-        position_ids = attention_mask.long().cumsum(-1) - 1
-        position_ids.masked_fill_(attention_mask == 0, 1)
-        output = self.model(sequences, attention_mask=attention_mask, position_ids=position_ids)
+        #position_ids = attention_mask.long().cumsum(-1) - 1
+        #position_ids.masked_fill_(attention_mask == 0, 1)
+        output = self.model(sequences, attention_mask=attention_mask)#, position_ids=position_ids)
         log_probs = log_probs_from_logits(output["logits"][:, :-1, :], sequences[:, 1:])
 
         if return_output:

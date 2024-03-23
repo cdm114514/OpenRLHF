@@ -1,6 +1,7 @@
 import os
 import random
 import shutil
+import inspect
 from abc import ABC
 from collections import defaultdict
 from datetime import timedelta
@@ -94,6 +95,7 @@ class DeepspeedStrategy(ABC):
     def backward(self, loss: torch.Tensor, model: nn.Module, optimizer: optim.Optimizer, **kwargs) -> None:
         if isinstance(model, Actor):
             model = model.model
+        # print(inspect.getsource(model.backward))
         model.backward(loss)
 
     def optimizer_step(

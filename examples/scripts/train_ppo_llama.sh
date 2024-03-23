@@ -2,9 +2,9 @@ set -x
 
 read -r -d '' training_commands <<EOF
 ../train_ppo.py \
-    --pretrain OpenLLMAI/Llama-2-7b-sft-model-ocra-500k \
-    --reward_pretrain OpenLLMAI/Llama-2-7b-rm-anthropic_hh-lmsys-oasst-webgpt \
-    --save_path ./ckpt/7b_llama \
+    --pretrain facebook/opt-1.3b \
+    --reward_pretrain facebook/opt-350m \
+    --save_path ./ckpt/opt-1.3b \
     --save_steps -1 \
     --logging_steps 1 \
     --eval_steps -1 \

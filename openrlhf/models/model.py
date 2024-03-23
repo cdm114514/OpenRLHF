@@ -198,10 +198,10 @@ def _get_reward_model(base_pretrained_model, base_llm_model):
             return_output=False,
         ) -> torch.Tensor:
             # https://github.com/OpenLLMAI/OpenRLHF/issues/217
-            position_ids = attention_mask.long().cumsum(-1) - 1
-            position_ids.masked_fill_(attention_mask == 0, 1)
+            # position_ids = attention_mask.long().cumsum(-1) - 1
+            # position_ids.masked_fill_(attention_mask == 0, 1)
             outputs = getattr(self, self.base_model_prefix)(
-                input_ids, attention_mask=attention_mask, position_ids=position_ids
+                input_ids, attention_mask=attention_mask#, position_ids=position_ids
             )
             last_hidden_states = outputs["last_hidden_state"]
             values = self.value_head(last_hidden_states).squeeze(-1)
@@ -260,12 +260,12 @@ def _get_critic_model(base_pretrained_model, base_llm_model):
             return_output=False,
         ) -> torch.Tensor:
             # https://github.com/OpenLLMAI/OpenRLHF/issues/217
-            position_ids = attention_mask.long().cumsum(-1) - 1
-            position_ids.masked_fill_(attention_mask == 0, 1)
+            # position_ids = attention_mask.long().cumsum(-1) - 1
+            # position_ids.masked_fill_(attention_mask == 0, 1)
             outputs = getattr(self, self.base_model_prefix)(
                 input_ids,
-                attention_mask=attention_mask,
-                position_ids=position_ids,
+                attention_mask=attention_mask
+                #position_ids=position_ids,
             )
             last_hidden_states = outputs["last_hidden_state"]
             values = self.value_head(last_hidden_states).squeeze(-1)[:, :-1]
