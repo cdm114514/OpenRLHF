@@ -8,7 +8,7 @@ read -r -d '' training_commands <<EOF
     --save_steps -1 \
     --logging_steps 1 \
     --eval_steps -1 \
-    --micro_train_batch_size 2 \
+    --micro_train_batch_size 4 \
     --train_batch_size 128 \
     --micro_rollout_batch_size 4 \
     --rollout_batch_size 1024 \
@@ -24,12 +24,12 @@ read -r -d '' training_commands <<EOF
     --prompt_data_probs 0.4,0.5,0.1 \
     --max_samples 80000 \
     --normalize_reward \
-    --actor_init_on_gpu \
-    --adam_offload \
-    --flash_attn \
-    --gradient_checkpointing
+    --actor_init_on_gpu
 EOF
-     # --wandb [WANDB_TOKENS] or True (use wandb login command)
+
+    # --flash_attn \
+    # --gradient_checkpointing
+    # --wandb [WANDB_TOKENS] or True (use wandb login command)
 
 if [[ ${1} != "slurm" ]]; then
     deepspeed $training_commands
